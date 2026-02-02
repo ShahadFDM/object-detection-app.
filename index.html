@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Detection & Counting App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@2.1.0/dist/pose-detection.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection@2.0.0/dist/hand-pose-detection.min.js"></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Object Detection & Counting</h1>
+            <p class="subtitle">Powered by TensorFlow.js | Multiple Detection Models</p>
+        </header>
+
+        <main>
+            <div class="detection-area">
+                <div class="video-container">
+                    <video id="video" autoplay muted playsinline></video>
+                    <canvas id="canvas"></canvas>
+                    <img id="uploadedImage" alt="Uploaded image" style="display: none;">
+                    <div id="loading" class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading model...</p>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="startBtn" class="btn btn-primary" disabled>
+                        <span class="icon">▶</span> Start Camera
+                    </button>
+                    <button id="stopBtn" class="btn btn-danger" disabled>
+                        <span class="icon">■</span> Stop
+                    </button>
+                    <label class="btn btn-secondary upload-btn">
+                        <span class="icon">📁</span> Upload Image
+                        <input type="file" id="imageUpload" accept="image/*" hidden>
+                    </label>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card total">
+                        <span class="stat-label">Detections</span>
+                        <span id="totalCount" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card fps">
+                        <span class="stat-label">FPS</span>
+                        <span id="fpsValue" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card model">
+                        <span class="stat-label">Model</span>
+                        <span id="modelValue" class="stat-value">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <h2>� Scene Description</h2>
+                <div id="sceneDescription" class="scene-description">
+                    <p class="placeholder">Detection results will generate a description...</p>
+                </div>
+
+                <h2>�📊 Object Counts</h2>
+                <div id="objectCounts" class="object-counts">
+                    <p class="placeholder">Start detection to see counts...</p>
+                </div>
+
+                <h2>⚙️ Settings</h2>
+                <div class="settings">
+                    <div class="setting-item">
+                        <label for="modelSelect">Detection Model</label>
+                        <select id="modelSelect" class="model-select">
+                            <option value="coco-lite">🚀 COCO-SSD Lite (Fast)</option>
+                            <option value="coco-full">🎯 COCO-SSD Full (Accurate)</option>
+                            <option value="movenet">🏃 MoveNet (Body Pose)</option>
+                            <option value="handpose">✋ HandPose (Hand Detection)</option>
+                        </select>
+                        <p class="model-hint" id="modelHint">80 object classes, optimized for speed</p>
+                    </div>
+                    <div class="setting-item">
+                        <label for="confidenceThreshold">Confidence Threshold</label>
+                        <div class="range-wrapper">
+                            <input type="range" id="confidenceThreshold" min="0.1" max="1" step="0.05" value="0.5">
+                            <span id="confidenceValue">50%</span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label for="maxDetections">Max Detections</label>
+                        <div class="range-wrapper">
+                            <input type="range" id="maxDetections" min="5" max="50" step="5" value="20">
+                            <span id="maxDetectionsValue">20</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>📋 Detection Log</h2>
+                <div id="detectionLog" class="detection-log">
+                    <p class="placeholder">Detections will appear here...</p>
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            <p>Built with TensorFlow.js | COCO-SSD, MoveNet & HandPose models</p>
+        </footer>
+    </div>
+
+</body>
+</html>
