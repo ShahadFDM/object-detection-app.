@@ -1,4 +1,4 @@
-# object-detection-app.
+# Live_Object_Detection
 A real-time object detection application running entirely in the browser using TensorFlow.js.
 
 ## Features
@@ -20,4 +20,4 @@ A real-time object detection application running entirely in the browser using T
 - Pre-trained Models: COCO-SSD, MoveNet, HandPose
 
 ## Website link
-https://shahadfdm.github.io/object-detection-app./
+https://shahadfdm.github.io/Live_Object_Detection/
